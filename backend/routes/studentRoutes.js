@@ -2,25 +2,27 @@ import express from 'express';
 import {
   getStudents,
   getStudent,
+  getStudentProfile,
   createStudent,
   updateStudent,
   deleteStudent
 } from '../controllers/studentController.js';
 import protect from '../middleware/authMiddleware.js';
+import { adminOnly, studentOnly } from '../middleware/roleMiddleware.js';
 
 const router = express.Router();
 
-// All student routes are protected
-router.use(protect);
+// Student profile route (Student only)
+router.get('/profile', protect, studentOnly, getStudentProfile);
 
-// Student CRUD routes
+// Admin-only routes
 router.route('/')
-  .get(getStudents)
-  .post(createStudent);
+  .get(protect, adminOnly, getStudents)
+  .post(protect, adminOnly, createStudent);
 
 router.route('/:id')
-  .get(getStudent)
-  .put(updateStudent)
-  .delete(deleteStudent);
+  .get(protect, adminOnly, getStudent)
+  .put(protect, adminOnly, updateStudent)
+  .delete(protect, adminOnly, deleteStudent);
 
 export default router;

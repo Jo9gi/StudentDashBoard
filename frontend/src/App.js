@@ -4,7 +4,8 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Register from './components/Register';
-import Dashboard from './components/Dashboard';
+import AdminDashboard from './components/AdminDashboard';
+import StudentDashboard from './components/StudentDashboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/main.css';
 
@@ -42,6 +43,19 @@ const PublicRoute = ({ children }) => {
   return user ? <Navigate to="/dashboard" /> : children;
 };
 
+// Dashboard Router Component
+const DashboardRouter = () => {
+  const { user } = useAuth();
+  
+  if (user?.role === 'admin') {
+    return <AdminDashboard />;
+  } else if (user?.role === 'student') {
+    return <StudentDashboard />;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};
+
 function App() {
   return (
     <AuthProvider>
@@ -73,7 +87,7 @@ function App() {
               path="/dashboard" 
               element={
                 <ProtectedRoute>
-                  <Dashboard />
+                  <DashboardRouter />
                 </ProtectedRoute>
               } 
             />

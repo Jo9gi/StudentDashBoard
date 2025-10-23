@@ -6,7 +6,8 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    role: 'student'
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -86,6 +87,20 @@ const Register = () => {
                     required
                     minLength="6"
                   />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Role</label>
+                  <select
+                    className="form-select"
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="student">Student</option>
+                    <option value="admin">Admin</option>
+                  </select>
                 </div>
 
                 <button 

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-// User schema for authentication
+// User schema for authentication with role-based access
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Password is required'],
     minlength: 6
+  },
+  role: {
+    type: String,
+    enum: ['admin', 'student'],
+    default: 'student'
   }
 }, {
   timestamps: true

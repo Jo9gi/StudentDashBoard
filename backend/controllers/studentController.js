@@ -1,10 +1,23 @@
 import Student from '../models/Student.js';
 
-// Get all students
+// Get all students (Admin only)
 export const getStudents = async (req, res) => {
   try {
     const students = await Student.find({}).sort({ createdAt: -1 });
     res.json(students);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Get student profile (Student only - their own data)
+export const getStudentProfile = async (req, res) => {
+  try {
+    const student = await Student.findOne({ email: req.user.email });
+    if (!student) {
+      return res.status(404).json({ message: 'Student profile not found' });
+    }
+    res.json(student);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -19,6 +19,11 @@ const studentSchema = new mongoose.Schema({
     min: 16,
     max: 100
   },
+  department: {
+    type: String,
+    required: [true, 'Department is required'],
+    trim: true
+  },
   class: {
     type: String,
     required: [true, 'Class is required'],
@@ -35,9 +40,15 @@ const studentSchema = new mongoose.Schema({
     max: 4,
     default: 0
   },
-  fullTime: {
-    type: Boolean,
-    default: true
+  status: {
+    type: String,
+    enum: ['Full Time', 'Part Time'],
+    default: 'Full Time'
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: false
   },
   registrationDate: {
     type: Date,

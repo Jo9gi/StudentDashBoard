@@ -7,10 +7,11 @@ const StudentForm = ({ student, onSave, onCancel }) => {
     name: '',
     email: '',
     age: '',
+    department: '',
     class: '',
     section: '',
     gpa: '',
-    fullTime: true
+    status: 'Full Time'
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -113,6 +114,18 @@ const StudentForm = ({ student, onSave, onCancel }) => {
             </div>
 
             <div className="col-md-4 mb-3">
+              <label className="form-label">Department</label>
+              <input
+                type="text"
+                className="form-control"
+                name="department"
+                value={formData.department}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="col-md-4 mb-3">
               <label className="form-label">Class</label>
               <input
                 type="text"
@@ -124,7 +137,7 @@ const StudentForm = ({ student, onSave, onCancel }) => {
               />
             </div>
 
-            <div className="col-md-4 mb-3">
+            <div className="col-md-6 mb-3">
               <label className="form-label">Section</label>
               <input
                 type="text"
@@ -151,18 +164,17 @@ const StudentForm = ({ student, onSave, onCancel }) => {
             </div>
 
             <div className="col-md-6 mb-3">
-              <div className="form-check mt-4">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  name="fullTime"
-                  checked={formData.fullTime}
-                  onChange={handleChange}
-                />
-                <label className="form-check-label">
-                  Full Time Student
-                </label>
-              </div>
+              <label className="form-label">Status</label>
+              <select
+                className="form-select"
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                required
+              >
+                <option value="Full Time">Full Time</option>
+                <option value="Part Time">Part Time</option>
+              </select>
             </div>
           </div>
 

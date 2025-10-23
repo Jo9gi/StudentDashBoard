@@ -19,7 +19,10 @@ const Navbar = () => {
         {user && (
           <div className="navbar-nav ms-auto">
             <span className="navbar-text me-3">
-              Welcome, {user.name}!
+              Welcome, {user.name}! 
+              <span className={`badge ms-2 ${user.role === 'admin' ? 'bg-warning' : 'bg-info'}`}>
+                {user.role === 'admin' ? '🧑💼 Admin' : '🎓 Student'}
+              </span>
             </span>
             <button 
               className="btn btn-outline-light btn-sm"
