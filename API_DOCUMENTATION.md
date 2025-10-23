@@ -25,7 +25,8 @@ Authorization: Bearer <your_jwt_token>
 {
   "name": "John Doe",
   "email": "john@example.com",
-  "password": "password123"
+  "password": "password123",
+  "role": "student"
 }
 ```
 
@@ -35,6 +36,7 @@ Authorization: Bearer <your_jwt_token>
   "_id": "64f7c3f306aee78703cebea4",
   "name": "John Doe",
   "email": "john@example.com",
+  "role": "student",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
 ```
@@ -65,6 +67,7 @@ Authorization: Bearer <your_jwt_token>
   "_id": "64f7c3f306aee78703cebea4",
   "name": "John Doe",
   "email": "john@example.com",
+  "role": "student",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
 ```
@@ -83,7 +86,7 @@ Authorization: Bearer <your_jwt_token>
 ### 3. Get All Students
 **GET** `/students`
 
-**Description:** Retrieve all students (Protected Route)
+**Description:** Retrieve all students (Admin Only)
 
 **Headers:**
 ```
@@ -112,7 +115,7 @@ Authorization: Bearer <token>
 ### 4. Get Single Student
 **GET** `/students/:id`
 
-**Description:** Retrieve a specific student by ID (Protected Route)
+**Description:** Retrieve a specific student by ID (Admin Only)
 
 **Headers:**
 ```
@@ -144,7 +147,7 @@ Authorization: Bearer <token>
 ### 5. Create Student
 **POST** `/students`
 
-**Description:** Add a new student (Protected Route)
+**Description:** Add a new student (Admin Only)
 
 **Headers:**
 ```
@@ -184,7 +187,7 @@ Authorization: Bearer <token>
 ### 6. Update Student
 **PUT** `/students/:id`
 
-**Description:** Update an existing student (Protected Route)
+**Description:** Update an existing student (Admin Only)
 
 **Headers:**
 ```
@@ -219,7 +222,34 @@ Authorization: Bearer <token>
 ### 7. Delete Student
 **DELETE** `/students/:id`
 
-**Description:** Remove a student (Protected Route)
+**Description:** Remove a student (Admin Only)
+
+### 8. Get Student Profile
+**GET** `/students/profile`
+
+**Description:** Get own student profile (Student Only)
+
+**Headers:**
+```
+Authorization: Bearer <token>
+```
+
+**Response (200):**
+```json
+{
+  "_id": "64f7c52506aee78703cebea5",
+  "name": "Alice Johnson",
+  "email": "alice@example.com",
+  "age": 20,
+  "department": "Computer Science",
+  "class": "B-Tech",
+  "section": "A",
+  "gpa": 3.8,
+  "gpaScale": "4",
+  "status": "Full Time",
+  "registrationDate": "2024-01-15T10:30:00.000Z"
+}
+```
 
 **Headers:**
 ```
@@ -250,6 +280,7 @@ Authorization: Bearer <token>
   name: String (required),
   email: String (required, unique),
   password: String (required, min: 6),
+  role: String (enum: ['admin', 'student'], default: 'student'),
   createdAt: Date,
   updatedAt: Date
 }
@@ -261,10 +292,13 @@ Authorization: Bearer <token>
   name: String (required),
   email: String (required, unique),
   age: Number (required, min: 16, max: 100),
+  department: String (required),
   class: String (required),
   section: String (required),
-  gpa: Number (min: 0, max: 4, default: 0),
-  fullTime: Boolean (default: true),
+  gpa: Number (min: 0, max: 10, default: 0),
+  gpaScale: String (enum: ['4', '10'], default: '4'),
+  status: String (enum: ['Full Time', 'Part Time'], default: 'Full Time'),
+  userId: ObjectId (ref: 'User', optional),
   registrationDate: Date (default: now),
   createdAt: Date,
   updatedAt: Date

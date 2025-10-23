@@ -70,17 +70,26 @@ Frontend will run on `http://localhost:3000`
 
 ## 5️⃣ Testing the Application
 
-### Backend API Testing
-Use Postman to test these endpoints:
-- POST `http://localhost:5000/api/auth/signup`
-- POST `http://localhost:5000/api/auth/login`
-- GET `http://localhost:5000/api/students` (requires authentication)
+### Role-Based Testing
 
-### Frontend Testing
-1. Open `http://localhost:3000`
-2. Register a new account
-3. Login with credentials
-4. Add, edit, and delete students
+#### Admin Flow
+1. Register with role: "admin"
+2. Login → Redirected to Admin Dashboard
+3. View statistics and student list
+4. Add/Edit/Delete student records
+5. Use search functionality
+
+#### Student Flow
+1. Register with role: "student"
+2. Admin creates student profile with matching email
+3. Login → Redirected to Student Dashboard
+4. View personal academic profile
+
+### API Testing
+- POST `http://localhost:5000/api/auth/signup` (with role)
+- POST `http://localhost:5000/api/auth/login`
+- GET `http://localhost:5000/api/students` (Admin only)
+- GET `http://localhost:5000/api/students/profile` (Student only)
 
 ## 6️⃣ Troubleshooting
 
@@ -147,12 +156,20 @@ student-dashboard/
 └── README.md
 ```
 
-## 9️⃣ Next Steps
+## 9️⃣ Advanced Features
 
-1. **Customize the UI**: Modify Bootstrap classes and custom CSS
-2. **Add Features**: Implement search, filtering, pagination
-3. **Deploy**: Use Vercel (frontend) and Render (backend)
-4. **Enhance Security**: Add input validation, rate limiting
+✅ **Role-Based Dashboards**: Admin and Student interfaces
+✅ **GPA Scale Options**: 4.0 and 10.0 point systems
+✅ **Search & Filter**: Real-time student filtering
+✅ **Responsive Design**: Mobile-friendly interface
+✅ **JWT Security**: Token-based authentication
+
+## 🚀 Next Steps
+
+1. **Deploy**: Use Vercel (frontend) and Render (backend)
+2. **Add Features**: Pagination, data export, notifications
+3. **Enhance Security**: Rate limiting, input validation
+4. **UI Improvements**: Dark mode, animations
 
 ## 🔟 Support
 
