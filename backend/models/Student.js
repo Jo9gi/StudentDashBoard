@@ -38,7 +38,14 @@ const studentSchema = new mongoose.Schema({
     type: Number,
     min: 0,
     max: 10,
-    default: 0
+    default: 0,
+    validate: {
+      validator: function(value) {
+        const maxValue = this.gpaScale === '10' ? 10 : 4;
+        return value <= maxValue;
+      },
+      message: 'GPA value exceeds the maximum for the selected scale'
+    }
   },
   gpaScale: {
     type: String,
