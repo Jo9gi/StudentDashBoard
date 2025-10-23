@@ -11,6 +11,7 @@ const StudentForm = ({ student, onSave, onCancel }) => {
     class: '',
     section: '',
     gpa: '',
+    gpaScale: '4',
     status: 'Full Time'
   });
   const [error, setError] = useState('');
@@ -149,7 +150,7 @@ const StudentForm = ({ student, onSave, onCancel }) => {
               />
             </div>
 
-            <div className="col-md-6 mb-3">
+            <div className="col-md-4 mb-3">
               <label className="form-label">GPA</label>
               <input
                 type="number"
@@ -158,9 +159,22 @@ const StudentForm = ({ student, onSave, onCancel }) => {
                 value={formData.gpa}
                 onChange={handleChange}
                 min="0"
-                max="4"
+                max={formData.gpaScale}
                 step="0.1"
               />
+            </div>
+
+            <div className="col-md-2 mb-3">
+              <label className="form-label">Scale</label>
+              <select
+                className="form-select"
+                name="gpaScale"
+                value={formData.gpaScale}
+                onChange={handleChange}
+              >
+                <option value="4">4.0</option>
+                <option value="10">10.0</option>
+              </select>
             </div>
 
             <div className="col-md-6 mb-3">

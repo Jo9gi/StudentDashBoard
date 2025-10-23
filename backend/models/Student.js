@@ -37,8 +37,13 @@ const studentSchema = new mongoose.Schema({
   gpa: {
     type: Number,
     min: 0,
-    max: 4,
+    max: 10,
     default: 0
+  },
+  gpaScale: {
+    type: String,
+    enum: ['4', '10'],
+    default: '4'
   },
   status: {
     type: String,

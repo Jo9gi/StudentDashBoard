@@ -1,5 +1,14 @@
 import React from 'react';
 
+// Helper function to determine GPA color based on scale
+const getGPAColor = (gpa, scale) => {
+  if (!gpa) return 'bg-secondary';
+  const percentage = (gpa / (scale || 4)) * 100;
+  if (percentage >= 85) return 'bg-success';
+  if (percentage >= 60) return 'bg-warning';
+  return 'bg-danger';
+};
+
 const StudentList = ({ students, onEdit, onDelete, isAdmin = false }) => {
   return (
     <div className="card">
@@ -36,8 +45,8 @@ const StudentList = ({ students, onEdit, onDelete, isAdmin = false }) => {
                     <td>{student.class}</td>
                     <td>{student.section}</td>
                     <td>
-                      <span className={`badge ${student.gpa >= 3.5 ? 'bg-success' : student.gpa >= 2.5 ? 'bg-warning' : 'bg-danger'}`}>
-                        {student.gpa || 'N/A'}
+                      <span className={`badge ${getGPAColor(student.gpa, student.gpaScale)}`}>
+                        {student.gpa || 'N/A'}/{student.gpaScale || '4'}
                       </span>
                     </td>
                     <td>

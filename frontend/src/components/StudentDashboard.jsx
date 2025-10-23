@@ -2,6 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
+// Helper function for GPA color
+const getGPAColor = (gpa, scale) => {
+  if (!gpa) return 'bg-secondary';
+  const percentage = (gpa / (scale || 4)) * 100;
+  if (percentage >= 85) return 'bg-success';
+  if (percentage >= 60) return 'bg-warning';
+  return 'bg-danger';
+};
+
 const StudentDashboard = () => {
   const [studentData, setStudentData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -127,10 +136,10 @@ const StudentDashboard = () => {
               <div className="row">
                 <div className="col-md-6">
                   <h5>Current GPA</h5>
-                  <h1 className={`display-4 ${studentData.gpa >= 3.5 ? 'text-success' : studentData.gpa >= 2.5 ? 'text-warning' : 'text-danger'}`}>
+                  <h1 className={`display-4 ${getGPAColor(studentData.gpa, studentData.gpaScale).replace('bg-', 'text-')}`}>
                     {studentData.gpa || 'N/A'}
                   </h1>
-                  <p className="text-muted">Out of 4.0</p>
+                  <p className="text-muted">Out of {studentData.gpaScale || '4.0'}</p>
                 </div>
                 <div className="col-md-6">
                   <h5>Registration Date</h5>

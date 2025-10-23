@@ -144,7 +144,7 @@ const AdminDashboard = () => {
               <h5 className="card-title">Avg GPA</h5>
               <h2>
                 {students.length > 0 
-                  ? (students.reduce((sum, s) => sum + (s.gpa || 0), 0) / students.length).toFixed(1)
+                  ? `${(students.reduce((sum, s) => sum + (s.gpa || 0), 0) / students.length).toFixed(1)} avg`
                   : '0.0'
                 }
               </h2>
